@@ -1,4 +1,6 @@
 github.com/cpuguy83/go-md2man/v2 v2.0.2/go.mod h1:tgQtvFlXSQOSOSIRvRPT7W67SCa46tRHOmNcaadrF8o=
+github.com/d3v-friends/go-pure v0.0.25 h1:qkMoctHPs3xv/fuWh6sypCAtHAAD8UwFxEImTXm1t40=
+github.com/d3v-friends/go-pure v0.0.25/go.mod h1:pdbckceHJIsKzlMllFc46VZ66vZid56GPj7RDhjry3U=
 github.com/golang/protobuf v1.5.0/go.mod h1:FsONVRAS9T7sI+LIUmWTfcYkHO4aIWwzhcaSAoJOfIk=
 github.com/golang/protobuf v1.5.3 h1:KhyjKVUg7Usr/dYsdSqoFveMYd5ko72D+zANwlG1mmg=
 github.com/golang/protobuf v1.5.3/go.mod h1:XVQd3VNwM+JqD3oG2Ue2ip4fOMUkwXdXDdiuN0vRsmY=

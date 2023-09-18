@@ -9,7 +9,7 @@ require (
 )
 
 require (
-	github.com/golang/protobuf v1.5.3 // indirect
+	github.com/d3v-friends/go-pure v0.0.25 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	golang.org/x/net v0.9.0 // indirect
