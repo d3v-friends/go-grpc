@@ -3,11 +3,13 @@ package main
 import (
 	"fmt"
 	"github.com/d3v-friends/go-grpc/fn/fnYaml"
+	"github.com/d3v-friends/go-pure/fnFile"
+	"github.com/d3v-friends/go-pure/fnPanic"
 	"github.com/spf13/cobra"
 	"log"
 	"os"
 	"os/exec"
-	"path"
+	"runtime"
 )
 
 func main() {
@@ -47,18 +49,19 @@ func newProtocCmd() (res *cobra.Command) {
 			panic(err)
 		}
 
-		var pwd string
-		if pwd, err = os.Getwd(); err != nil {
-			panic(err)
-		}
-		yamlPath = path.Join(pwd, yamlPath)
+		var fp = fnPanic.OnValue(fnFile.NewPathBuilderWithWD())
+		fp.Join(yamlPath)
+		yamlPath = fp.String()
 
-		yaml := &protocYaml{}
+		var yaml = &protocYaml{}
 		if err = fnYaml.Open(yamlPath, yaml); err != nil {
 			panic(err)
 		}
 
-		outPath := path.Join(pwd, yaml.OutPath)
+		fp = fnPanic.OnValue(fnFile.NewPathBuilderWithWD())
+		fp.Join(yaml.OutPath)
+
+		var outPath = fp.String()
 		if err = os.MkdirAll(outPath, os.ModePerm); err != nil {
 			panic(err)
 		}
@@ -73,14 +76,13 @@ func newProtocCmd() (res *cobra.Command) {
 }
 
 func (x *protocYaml) generate(opt string) {
-	var err error
-	var pwd string
-	if pwd, err = os.Getwd(); err != nil {
-		panic(err)
-	}
+	var outPathBuilder = fnPanic.OnValue(fnFile.NewPathBuilderWithWD())
+	outPathBuilder.Join(x.OutPath)
+	var outPath = outPathBuilder.String()
 
-	outPath := path.Join(pwd, x.OutPath)
-	protoPath := path.Join(pwd, x.ProtoPath)
+	var protoPathBuilder = fnPanic.OnValue(fnFile.NewPathBuilderWithWD())
+	protoPathBuilder.Join(x.ProtoPath)
+	var protoPath = protoPathBuilder.String()
 
 	for _, protoNm := range x.Include {
 		strCmd := make([]string, 0)
@@ -99,13 +101,15 @@ func (x *protocYaml) generate(opt string) {
 			importFileLs = append(importFileLs, importProtoNm)
 		}
 
+		if runtime.GOOS == "windows" {
+			strCmd = append(strCmd, "--experimental_allow_proto3_optional")
+		}
+
 		strCmd = append(strCmd, protoNm)
 		strCmd = append(strCmd, importFileLs...)
 
 		cmd := exec.Command("protoc", strCmd...)
 		log.Println(fmt.Sprintf("cmd: %s", cmd.String()))
-		if err = cmd.Run(); err != nil {
-			panic(err)
-		}
+		fnPanic.On(cmd.Run())
 	}
 }
