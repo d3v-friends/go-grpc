@@ -1,17 +1,16 @@
-package template
+package fnGrpc
 
 import (
 	"context"
 	"github.com/d3v-friends/go-pure/fnLogger"
-	"github.com/d3v-friends/go-pure/fnPanic"
 	"github.com/google/uuid"
 	"google.golang.org/grpc"
 	"time"
 )
 
-type FnInterceptor func(ctx context.Context) (res context.Context, err error)
+type FnSetContext func(ctx context.Context) context.Context
 
-func Interceptor(fn FnInterceptor, logger fnLogger.IfLogger) grpc.UnaryServerInterceptor {
+func Interceptor(fn FnSetContext, logger fnLogger.IfLogger) grpc.UnaryServerInterceptor {
 	return func(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (resp interface{}, err error) {
 		var requestAt = time.Now()
 		var requestLogger = logger.WithFields(fnLogger.Fields{
@@ -21,7 +20,7 @@ func Interceptor(fn FnInterceptor, logger fnLogger.IfLogger) grpc.UnaryServerInt
 		})
 		requestLogger.Trace("requested")
 
-		ctx = fnPanic.OnValue(fn(ctx))
+		ctx = fn(ctx)
 
 		defer func() {
 			var responseAt = time.Now()
@@ -36,7 +35,7 @@ func Interceptor(fn FnInterceptor, logger fnLogger.IfLogger) grpc.UnaryServerInt
 					Trace("responded")
 			} else {
 				responseLogger.
-					Error("err=%s", err.Error())
+					Error("error: err=%s", err.Error())
 			}
 		}()
 
