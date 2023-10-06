@@ -20,10 +20,10 @@
 
 3. cli 설치
    ~~~bash
-   go install github.com/d3v-friends/go-grpc/go-grpc-cli
+   go install github.com/d3v-friends/go-grpc
    ~~~
 
 4. 사용
    ~~~bash
-   go-grpc-cli protoc --config=protoc.yaml
+   go-grpc protoc --config=protoc.yaml
    ~~~
