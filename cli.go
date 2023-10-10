@@ -84,13 +84,13 @@ func (x *protocYaml) generate(opt string) {
 		strCmd = append(strCmd,
 			fmt.Sprintf("--proto_path=%s", protoPath),
 			fmt.Sprintf("--%s_out=%s", opt, outPath),
-			fmt.Sprintf("--%s_opt=M%s=.\\%s", opt, protoNm, x.PackageNm),
+			fmt.Sprintf("--%s_opt=M%s=/%s", opt, protoNm, x.PackageNm),
 		)
 
 		importFileLs := make([]string, 0)
 		for _, importProtoNm := range x.Import {
 			strCmd = append(strCmd,
-				fmt.Sprintf("--%s_opt=M%s=.\\%s", opt, importProtoNm.String(), x.PackageNm),
+				fmt.Sprintf("--%s_opt=M%s=/%s", opt, importProtoNm.String(), x.PackageNm),
 			)
 
 			importFileLs = append(importFileLs, importProtoNm.String())
