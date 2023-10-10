@@ -11,14 +11,11 @@
    
 2. protobuf 인스톨 하기
    ~~~bash
-   go get google.golang.org/protobuf/cmd/protoc-gen-go
-   go get google.golang.org/grpc/cmd/protoc-gen-go-grpc
-   
-   go install google.golang.org/protobuf/cmd/protoc-gen-go
-   go install google.golang.org/grpc/cmd/protoc-gen-go-grpc
+   go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+   go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
    ~~~
 
-3. cli 설치
+3. cli 설치w
    ~~~bash
    go install github.com/d3v-friends/go-grpc
    ~~~

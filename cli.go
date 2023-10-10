@@ -9,7 +9,6 @@ import (
 	"log"
 	"os"
 	"os/exec"
-	"runtime"
 )
 
 func main() {
@@ -26,11 +25,11 @@ func main() {
 }
 
 type protocYaml struct {
-	ProtoPath string   `yaml:"protoPath"`
-	OutPath   string   `yaml:"outPath"`
-	PackageNm string   `yaml:"packageNm"`
-	Include   []string `yaml:"include"`
-	Import    []string `yaml:"import"`
+	ProtoPath fnFile.Path   `yaml:"protoPath"`
+	OutPath   fnFile.Path   `yaml:"outPath"`
+	PackageNm string        `yaml:"packageNm"`
+	Include   []fnFile.Path `yaml:"include"`
+	Import    []fnFile.Path `yaml:"import"`
 }
 
 func newProtocCmd() (res *cobra.Command) {
@@ -58,10 +57,11 @@ func newProtocCmd() (res *cobra.Command) {
 			panic(err)
 		}
 
-		fp = fnPanic.OnValue(fnFile.NewPathBuilderWithWD())
-		fp.Join(yaml.OutPath)
+		var outPath string
+		if outPath, err = yaml.OutPath.Path(); err != nil {
+			panic(err)
+		}
 
-		var outPath = fp.String()
 		if err = os.MkdirAll(outPath, os.ModePerm); err != nil {
 			panic(err)
 		}
@@ -76,36 +76,27 @@ func newProtocCmd() (res *cobra.Command) {
 }
 
 func (x *protocYaml) generate(opt string) {
-	var outPathBuilder = fnPanic.OnValue(fnFile.NewPathBuilderWithWD())
-	outPathBuilder.Join(x.OutPath)
-	var outPath = outPathBuilder.String()
-
-	var protoPathBuilder = fnPanic.OnValue(fnFile.NewPathBuilderWithWD())
-	protoPathBuilder.Join(x.ProtoPath)
-	var protoPath = protoPathBuilder.String()
+	var protoPath = fnPanic.OnValue(x.ProtoPath.Path())
+	var outPath = fnPanic.OnValue(x.OutPath.Path())
 
 	for _, protoNm := range x.Include {
 		strCmd := make([]string, 0)
 		strCmd = append(strCmd,
 			fmt.Sprintf("--proto_path=%s", protoPath),
 			fmt.Sprintf("--%s_out=%s", opt, outPath),
-			fmt.Sprintf("--%s_opt=M%s=/%s", opt, protoNm, x.PackageNm),
+			fmt.Sprintf("--%s_opt=M%s=.\\%s", opt, protoNm, x.PackageNm),
 		)
 
 		importFileLs := make([]string, 0)
 		for _, importProtoNm := range x.Import {
 			strCmd = append(strCmd,
-				fmt.Sprintf("--%s_opt=M%s=/%s", opt, importProtoNm, x.PackageNm),
+				fmt.Sprintf("--%s_opt=M%s=.\\%s", opt, importProtoNm.String(), x.PackageNm),
 			)
 
-			importFileLs = append(importFileLs, importProtoNm)
+			importFileLs = append(importFileLs, importProtoNm.String())
 		}
 
-		if runtime.GOOS == "windows" {
-			strCmd = append(strCmd, "--experimental_allow_proto3_optional")
-		}
-
-		strCmd = append(strCmd, protoNm)
+		strCmd = append(strCmd, protoNm.String())
 		strCmd = append(strCmd, importFileLs...)
 
 		cmd := exec.Command("protoc", strCmd...)
