@@ -1,5 +1,5 @@
 protoPath: "./proto"
-outPath: "."
+outPath: "./proto"
 packageNm: "proto"
 include:
   - "share.proto"

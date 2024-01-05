@@ -1,4 +1,6 @@
 syntax = "proto3";
+option go_package = "github.com/d3v-friends/go-grpc/proto";
+package proto;
 
 message Time {
   string value = 1;
