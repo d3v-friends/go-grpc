@@ -1,0 +1,6 @@
+protoPath: "./proto"
+outPath: "."
+packageNm: "proto"
+include:
+  - "share.proto"
+import:

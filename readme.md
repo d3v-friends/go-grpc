@@ -56,5 +56,5 @@ import (
 5. 사용
 
 ~~~bash
-go run github.com/d3v-friends/go-grpc protoc --config=protoc.yml
+go run github.com/d3v-friends/go-grpc protoc --config=config.yaml
 ~~~
