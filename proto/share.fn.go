@@ -2,8 +2,8 @@ package proto
 
 import (
 	"errors"
-	"github.com/d3v-friends/go-snippet/fn/fnPanic"
-	"github.com/d3v-friends/go-snippet/typ"
+	"github.com/d3v-friends/go-tools/fn/fnPanic"
+	"github.com/d3v-friends/go-tools/typ"
 	"github.com/shopspring/decimal"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"

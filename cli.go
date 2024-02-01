@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
-	"github.com/d3v-friends/go-snippet/fn/fnFile"
-	"github.com/d3v-friends/go-snippet/fn/fnPanic"
-	"github.com/d3v-friends/go-snippet/fn/fnYaml"
+	"github.com/d3v-friends/go-tools/fn/fnFile"
+	"github.com/d3v-friends/go-tools/fn/fnPanic"
+	"github.com/d3v-friends/go-tools/fn/fnYaml"
 	"github.com/spf13/cobra"
 	"log"
 	"os"

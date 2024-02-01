@@ -2,7 +2,7 @@ package wrGrpc
 
 import (
 	"fmt"
-	"github.com/d3v-friends/go-snippet/fn/fnPanic"
+	"github.com/d3v-friends/go-tools/fn/fnPanic"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 	"net"
