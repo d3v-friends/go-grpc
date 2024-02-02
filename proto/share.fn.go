@@ -11,7 +11,7 @@ import (
 )
 
 var (
-	ErrInvalidIdxDir = errors.New("invalid IdxDir")
+	ErrInvalidIdxDir = errors.New("invalid index direction")
 )
 
 /*------------------------------------------------------------------------------------------------*/
@@ -69,7 +69,7 @@ func (x *Decimal) DecimalP() decimal.Decimal {
 
 /*------------------------------------------------------------------------------------------------*/
 
-func (x *Period) Query() (res bson.M, err error) {
+func (x *TimeArgs) Query() (res bson.M, err error) {
 	res = make(bson.M)
 
 	if x.Equal != nil {
