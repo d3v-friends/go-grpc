@@ -1,4 +1,4 @@
-package wrGrpc
+package fnGrpc
 
 import (
 	"fmt"
