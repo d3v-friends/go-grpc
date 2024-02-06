@@ -14,7 +14,7 @@
 	* $GOPATH/bin 에 protoc extension 이 설치된다
 
    ~~~bash
-   go get google.golang.org/protobuf/cmd
+   go get google.golang.org/protobuf
    go install google.golang.org/protobuf/cmd/protoc-gen-go
    
    go get google.golang.org/grpc/cmd/protoc-gen-go-grpc
