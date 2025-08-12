@@ -1,11 +1,12 @@
-package gcServer
+package gc
 
 import (
 	"fmt"
-	"github.com/d3v-friends/go-tools/fnPanic"
-	"google.golang.org/grpc"
 	"net"
 	"strings"
+
+	"github.com/d3v-friends/go-tools/fnPanic"
+	"google.golang.org/grpc"
 )
 
 func Listen(sv *grpc.Server, port string) {

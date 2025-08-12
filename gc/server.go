@@ -1,4 +1,4 @@
-package gcServer
+package gc
 
 import (
 	"google.golang.org/grpc"
