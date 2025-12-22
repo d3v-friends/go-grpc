@@ -1,0 +1,29 @@
+edition = "2023";
+package proto;
+import "google/protobuf/timestamp.proto";
+
+service SvTest {
+  rpc read(Time) returns (Decimal);
+  rpc write(google.protobuf.Timestamp) returns (google.protobuf.Timestamp);
+}
+
+message Time {
+  string value = 1;
+}
+
+message Decimal {
+  string value = 1;
+}
+
+message ObjectID {
+  string value = 1;
+}
+
+message Pager {
+  int64 page = 1;
+  int64 size = 2;
+}
+
+message GormID {
+  string value = 1;
+}

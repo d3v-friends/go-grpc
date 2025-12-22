@@ -12,3 +12,6 @@
 
 # env
 .env
+
+# dev
+*.pb.go
